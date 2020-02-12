@@ -8,7 +8,7 @@
 #include "util.h"
 
 #include <algorithm>
-#include <iostream>
+//#include <iostream>
 #include <map>
 #include <set>
 #include <sstream>
@@ -40,13 +40,13 @@ namespace eevm
       return immediate_bytes > 0;
     }
   };
-
+/*
   inline std::ostream& operator<<(std::ostream& os, const Op& op)
   {
     os << op.mnemonic;
     return os;
   }
-
+*/
   struct Instr
   {
     const Op op;
@@ -63,7 +63,8 @@ namespace eevm
     auto get_immediate() const
     {
       if (!raw_imm.size())
-        throw std::logic_error("Instruction does not have immediate.");
+        assert(false);
+//        throw std::logic_error("Instruction does not have immediate.");
       return from_big_endian(raw_imm.data(), raw_imm.size());
     }
   };
@@ -125,13 +126,14 @@ namespace eevm
         const auto op = getOp((Opcode)opcode);
         const auto bytes_left = prog.cend() - it;
         if (bytes_left < op.immediate_bytes)
-          throw std::out_of_range(fmt::format(
-            "Immediate exceeds instruction stream (op {} at "
-            "instruction {} wants {} bytes, only {} remain)",
-            op.mnemonic,
-            (size_t)(it - prog.cbegin()),
-            op.immediate_bytes,
-            bytes_left));
+          assert(false);
+//          throw std::out_of_range(fmt::format(
+//            "Immediate exceeds instruction stream (op {} at "
+//            "instruction {} wants {} bytes, only {} remain)",
+//            op.mnemonic,
+//            (size_t)(it - prog.cbegin()),
+//            op.immediate_bytes,
+//            bytes_left));
 
         auto instr = std::make_unique<Instr>(
           op, pc, std::vector<uint8_t>(it, it + op.immediate_bytes));

@@ -732,8 +732,12 @@ namespace intx
 {
 constexpr inline int from_dec_digit(char c)
 {
-    return (c >= '0' && c <= '9') ? c - '0' :
-                                    throw std::invalid_argument{std::string{"Invalid digit: "} + c};
+    if (c >= '0' && c <= '9')
+        return c - '0';
+    else
+        assert(false);
+//    return (c >= '0' && c <= '9') ? c - '0' :
+//                                    throw std::invalid_argument{std::string{"Invalid digit: "} + c};
 }
 
 constexpr inline int from_hex_digit(char c)
@@ -757,7 +761,8 @@ constexpr Int from_string(const char* s)
         while (const auto c = *s++)
         {
             if (++num_digits > int{sizeof(x) * 2})
-                throw std::overflow_error{"Integer overflow"};
+                assert(false);
+//                throw std::overflow_error{"Integer overflow"};
             x = (x << 4) | from_hex_digit(c);
         }
         return x;
@@ -766,12 +771,14 @@ constexpr Int from_string(const char* s)
     while (const auto c = *s++)
     {
         if (num_digits++ > std::numeric_limits<Int>::digits10)
-            throw std::overflow_error{"Integer overflow"};
+            assert(false);
+//            throw std::overflow_error{"Integer overflow"};
 
         const auto d = from_dec_digit(c);
         x = constexpr_mul(x, Int{10}) + d;
         if (x < d)
-            throw std::overflow_error{"Integer overflow"};
+            assert(false);
+//            throw std::overflow_error{"Integer overflow"};
     }
     return x;
 }
@@ -791,7 +798,8 @@ template <unsigned N>
 inline std::string to_string(uint<N> x, int base = 10)
 {
     if (base < 2 || base > 36)
-        throw std::invalid_argument{"invalid base: " + std::to_string(base)};
+        assert(false);
+//        throw std::invalid_argument{"invalid base: " + std::to_string(base)};
 
     if (x == 0)
         return "0";

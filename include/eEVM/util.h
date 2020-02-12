@@ -26,7 +26,8 @@ namespace eevm
     }
     else if (size > 32)
     {
-      throw std::logic_error("Calling from_big_endian with oversized array");
+      assert(false);
+//      throw std::logic_error("Calling from_big_endian with oversized array");
     }
     else
     {

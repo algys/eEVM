@@ -4,7 +4,7 @@
 #pragma once
 #include <intx/intx.hpp>
 #include <iomanip>
-#include <iostream>
+//#include <iostream>
 #include <nlohmann/json.hpp>
 #include <sstream>
 
@@ -15,6 +15,7 @@ namespace intx
 {
   // ostream operator allows easy printing. This should be contributed directly
   // to intx
+/*
   template <unsigned N>
   std::ostream& operator<<(std::ostream& o, const uint<N>& n)
   {
@@ -52,6 +53,7 @@ namespace intx
     }
     return o;
   }
+*/
 
   // to/from json converters
   template <unsigned N>
@@ -67,8 +69,9 @@ namespace intx
   {
     if (!j.is_string())
     {
-      throw std::runtime_error(
-        "intx numbers can only be parsed from hex-string");
+      assert(false);
+//      throw std::runtime_error(
+//        "intx numbers can only be parsed from hex-string");
     }
 
     const auto s = j.get<std::string>();

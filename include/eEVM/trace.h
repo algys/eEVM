@@ -7,7 +7,7 @@
 #include "stack.h"
 
 #include <fmt/format_header_only.h>
-#include <iostream>
+//#include <iostream>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -59,7 +59,7 @@ namespace eevm
     {
       events.clear();
     }
-
+/*
     void print_last_n(std::ostream& os, size_t n) const
     {
       auto first = n < events.size() ? events.size() - n : 0;
@@ -68,6 +68,7 @@ namespace eevm
         os << fmt::format("{}", events[i]) << std::endl;
       }
     }
+*/
   };
 } // namespace eevm
 

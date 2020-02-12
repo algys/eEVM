@@ -3913,11 +3913,11 @@ namespace detail {
     DOCTEST_GCC_SUPPRESS_WARNING_WITH_PUSH("-Wdeprecated-declarations")
     DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wdeprecated-declarations")
     ContextScope::~ContextScope() {
-        if(std::uncaught_exception()) {
-            std::ostringstream s;
-            this->stringify(&s);
-            g_cs->stringifiedContexts.push_back(s.str().c_str());
-        }
+//        if(std::uncaught_exception()) {
+//            std::ostringstream s;
+//            this->stringify(&s);
+//            g_cs->stringifiedContexts.push_back(s.str().c_str());
+//        }
         g_infoContexts.pop_back();
     }
     DOCTEST_CLANG_SUPPRESS_WARNING_POP

@@ -206,15 +206,15 @@ namespace eevm
       // run
       while (ctxt->get_pc() < ctxt->prog.code.size())
       {
-        try
-        {
+//        try
+//        {
           dispatch();
-        }
-        catch (Exception& ex)
-        {
-          ctxt->eh(ex);
-          pop_context();
-        }
+//        }
+//        catch (Exception& ex)
+//        {
+//          ctxt->eh(ex);
+//          pop_context();
+//        }
 
         if (!ctxt)
           break;
@@ -244,9 +244,10 @@ namespace eevm
       Context::ExceptionHandler&& eh)
     {
       if (get_call_depth() >= Consts::MAX_CALL_DEPTH)
-        throw Exception(
-          ET::outOfBounds,
-          "Reached max call depth (" + to_string(Consts::MAX_CALL_DEPTH) + ")");
+        assert(false);
+//        throw Exception(
+//          ET::outOfBounds,
+//          "Reached max call depth (" + to_string(Consts::MAX_CALL_DEPTH) + ")");
 
       auto c = make_unique<Context>(
         caller,
@@ -299,16 +300,18 @@ namespace eevm
 
       const auto lastDst = offDst + size;
       if (lastDst < offDst)
-        throw Exception(
-          ET::outOfBounds,
-          "Integer overflow in copy_mem (" + to_string(lastDst) + " < " +
-            to_string(offDst) + ")");
+        assert(false);
+//        throw Exception(
+//          ET::outOfBounds,
+//          "Integer overflow in copy_mem (" + to_string(lastDst) + " < " +
+//            to_string(offDst) + ")");
 
       if (lastDst > Consts::MAX_MEM_SIZE)
-        throw Exception(
-          ET::outOfBounds,
-          "Memory limit exceeded (" + to_string(lastDst) + " > " +
-            to_string(Consts::MAX_MEM_SIZE) + ")");
+        assert(false);
+//        throw Exception(
+//          ET::outOfBounds,
+//          "Memory limit exceeded (" + to_string(lastDst) + " > " +
+//            to_string(Consts::MAX_MEM_SIZE) + ")");
 
       if (lastDst > dst.size())
         dst.resize(lastDst);
@@ -345,16 +348,18 @@ namespace eevm
     {
       const auto end = offset + size;
       if (end < offset)
-        throw Exception(
-          ET::outOfBounds,
-          "Integer overflow in memory access (" + to_string(end) + " < " +
-            to_string(offset) + ")");
+        assert(false);
+//        throw Exception(
+//          ET::outOfBounds,
+//          "Integer overflow in memory access (" + to_string(end) + " < " +
+//            to_string(offset) + ")");
 
       if (end > Consts::MAX_MEM_SIZE)
-        throw Exception(
-          ET::outOfBounds,
-          "Memory limit exceeded (" + to_string(end) + " > " +
-            to_string(Consts::MAX_MEM_SIZE) + ")");
+        assert(false);
+//        throw Exception(
+//          ET::outOfBounds,
+//          "Memory limit exceeded (" + to_string(end) + " > " +
+//            to_string(Consts::MAX_MEM_SIZE) + ")");
 
       if (end > ctxt->mem.size())
         ctxt->mem.resize(end);
@@ -369,9 +374,10 @@ namespace eevm
     void jump_to(const uint64_t newPc)
     {
       if (ctxt->prog.jump_dests.find(newPc) == ctxt->prog.jump_dests.end())
-        throw Exception(
-          ET::illegalInstruction,
-          to_string(newPc) + " is not a jump destination");
+        assert(false);
+//        throw Exception(
+//          ET::illegalInstruction,
+//          to_string(newPc) + " is not a jump destination");
       ctxt->set_pc(newPc);
     }
 
@@ -383,7 +389,8 @@ namespace eevm
     {
       const auto r = x + y;
       if (r < x)
-        throw overflow_error("integer overflow");
+        assert(false);
+//        throw overflow_error("integer overflow");
       return r;
     }
 
@@ -673,7 +680,8 @@ namespace eevm
                    ctxt->get_pc(),
                    get_call_depth())
               << endl;
-          throw Exception(Exception::Type::illegalInstruction, err.str());
+          assert(false);
+//          throw Exception(Exception::Type::illegalInstruction, err.str());
       };
     }
 
@@ -1096,16 +1104,18 @@ namespace eevm
       const uint8_t bytes = get_op() - PUSH1 + 1;
       const auto end = ctxt->get_pc() + bytes;
       if (end < ctxt->get_pc())
-        throw Exception(
-          ET::outOfBounds,
-          "Integer overflow in push (" + to_string(end) + " < " +
-            to_string(ctxt->get_pc()) + ")");
+        assert(false);
+//        throw Exception(
+//          ET::outOfBounds,
+//          "Integer overflow in push (" + to_string(end) + " < " +
+//            to_string(ctxt->get_pc()) + ")");
 
       if (end >= ctxt->prog.code.size())
-        throw Exception(
-          ET::outOfBounds,
-          "Push immediate exceeds size of program (" + to_string(end) +
-            " >= " + to_string(ctxt->prog.code.size()) + ")");
+        assert(false);
+//        throw Exception(
+//          ET::outOfBounds,
+//          "Push immediate exceeds size of program (" + to_string(end) +
+//            " >= " + to_string(ctxt->prog.code.size()) + ")");
 
       // TODO: parse immediate once and not every time
       auto pc = ctxt->get_pc() + 1;
@@ -1276,9 +1286,10 @@ namespace eevm
       if (addr >= 1 && addr <= 8)
       {
         // TODO: implement native extensions
-        throw Exception(
-          ET::notImplemented,
-          "Precompiled contracts/native extensions are not implemented.");
+        assert(false);
+//        throw Exception(
+//          ET::notImplemented,
+//          "//Precompiled contracts/native extensions are not implemented.");
       }
 
       decltype(auto) callee = gs.get(addr);
@@ -1337,7 +1348,8 @@ namespace eevm
             he);
           break;
         default:
-          throw UnexpectedState("Unknown call opcode.");
+          assert(false);
+//          throw UnexpectedState("Unknown call opcode.");
       }
     }
   };

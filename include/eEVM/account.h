@@ -34,24 +34,26 @@ namespace eevm
       const auto this_balance = get_balance();
       if (amount > this_balance)
       {
-        throw Exception(
-          Exception::Type::outOfFunds,
-          "Insufficient funds to pay " + to_hex_string(amount) + " to " +
-            to_hex_string(other.get_address()) + " (from " +
-            to_hex_string(get_address()) + ", current balance " +
-            to_hex_string(this_balance) + ")");
+        assert(false);
+//        throw Exception(
+//          Exception::Type::outOfFunds,
+//          "Insufficient funds to pay " + to_hex_string(amount) + " to " +
+//            to_hex_string(other.get_address()) + " (from " +
+//            to_hex_string(get_address()) + ", current balance " +
+//            to_hex_string(this_balance) + ")");
       }
 
       const auto other_balance = other.get_balance();
       const auto proposed_balance = other_balance + amount;
       if (proposed_balance < other_balance)
       {
-        throw Exception(
-          Exception::Type::overflow,
-          "Overflow while attempting to pay " + to_hex_string(amount) + " to " +
-            to_hex_string(other.get_address()) + " (current balance " +
-            to_hex_string(other_balance) + ") from " +
-            to_hex_string(get_address()));
+        assert(false);
+//        throw Exception(
+//          Exception::Type::overflow,
+//          "Overflow while attempting to pay " + to_hex_string(amount) + " to " +
+//            to_hex_string(other.get_address()) + " (current balance " +
+//            to_hex_string(other_balance) + ") from " +
+//            to_hex_string(get_address()));
       }
 
       set_balance(this_balance - amount);

@@ -295,9 +295,10 @@ namespace eevm
       {
         if (size > 8)
         {
-          throw decode_error(
-            "Trying to decode number: " + std::to_string(size) +
-            " is too many bytes for uint64_t");
+          assert(false);
+//          throw decode_error(
+//            "Trying to decode number: " + std::to_string(size) +
+//            " is too many bytes for uint64_t");
         }
 
         size_t result = 0;
@@ -349,10 +350,11 @@ namespace eevm
       {
         if (size != N)
         {
-          throw decode_error(
-            "Trying to decode " + std::to_string(N) +
-            " byte array, but given " + std::to_string(size) +
-            " bytes to decode");
+          assert(false);
+//          throw decode_error(
+//            "Trying to decode " + std::to_string(N) +
+//            " byte array, but given " + std::to_string(size) +
+//            " bytes to decode");
         }
 
         std::array<uint8_t, N> result;
@@ -445,7 +447,8 @@ namespace eevm
     {
       if (size == 0)
       {
-        throw decode_error("Trying to decode length: got empty data");
+        assert(false);
+//        throw decode_error("Trying to decode length: got empty data");
       }
 
       // First byte IS the data
@@ -472,10 +475,11 @@ namespace eevm
 
         if (size < length_of_length)
         {
-          throw decode_error(
-            "Length of next element should be encoded in " +
-            std::to_string(length_of_length) + " bytes, but only " +
-            std::to_string(size) + " remain");
+          assert(false);
+//          throw decode_error(
+//            "Length of next element should be encoded in " +
+//            std::to_string(length_of_length) + " bytes, but only " +
+//            std::to_string(size) + " remain");
         }
 
         size -= length_of_length;
@@ -497,10 +501,11 @@ namespace eevm
 
       if (size < length_of_length)
       {
-        throw decode_error(
-          "Length of next list should be encoded in " +
-          std::to_string(length_of_length) + " bytes, but only " +
-          std::to_string(size) + " remain");
+        assert(false);
+//        throw decode_error(
+//          "Length of next list should be encoded in " +
+//          std::to_string(length_of_length) + " bytes, but only " +
+//          std::to_string(size) + " remain");
       }
 
       size -= length_of_length;
@@ -581,7 +586,8 @@ namespace eevm
       {
         if (arity != Arity::Single)
         {
-          throw decode_error("Expected single item, but data encodes a list");
+          assert(false);
+//          throw decode_error("Expected single item, but data encodes a list");
         }
 
         size -= contained_length;
@@ -590,17 +596,19 @@ namespace eevm
 
       if (arity != Arity::Multiple)
       {
-        throw decode_error(
-          "Expected list item, but data encodes a single item");
+        assert(false);
+//        throw decode_error(
+//          "Expected list item, but data encodes a single item");
       }
 
       if constexpr (sizeof...(Ts) == 0)
       {
         if (contained_length != 0)
         {
-          throw decode_error(
-            "Expected empty list, but data contains " +
-            std::to_string(contained_length) + " remaining bytes");
+          assert(false);
+//          throw decode_error(
+//            "Expected empty list, but data contains " +
+//            std::to_string(contained_length) + " remaining bytes");
         }
 
         return std::make_tuple();
